@@ -6,38 +6,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Calculator</title>
   <link rel="stylesheet" href="styles/styles.css">
-  <script src="scripts/scripts.js"></script>
+  <script src="scripts/scripts.js" defer></script>
 </head>
 <body>
   <div class="calculator">
-    <div class="output"></div>
+    <div class="output">
+      <p id="operations"></p>
+      <h1 id="final-result"></h1>
+    </div>
     <div class="buttons">
 
       <div class="large-buttons">
-        <button>CLEAR</button>
-        <button>DELETE</button>
+        <button id="clear-button">CLEAR</button>
+        <button id="delete-button">DELETE</button>
       </div>
 
       <div class="small-buttons">
-        <button class="num-buttons">7</button>
-        <button class="num-buttons">8</button>
-        <button class="num-buttons">9</button>
-        <button class="opr-buttons">/</button>
+        <button class="num-buttons" value="7">7</button>
+        <button class="num-buttons" value="8">8</button>
+        <button class="num-buttons" value="9">9</button>
+        <button class="opr-buttons" value="/">/</button>
 
-        <button class="num-buttons">4</button>
-        <button class="num-buttons">5</button>
-        <button class="num-buttons">6</button>
-        <button class="opr-buttons">x</button>
+        <button class="num-buttons" value="4">4</button>
+        <button class="num-buttons" value="5">5</button>
+        <button class="num-buttons" value="6">6</button>
+        <button class="opr-buttons" value="x">x</button>
 
-        <button class="num-buttons">1</button>
-        <button class="num-buttons">2</button>
-        <button class="num-buttons">3</button>
-        <button class="opr-buttons">-</button>
+        <button class="num-buttons" value="1">1</button>
+        <button class="num-buttons" value="2">2</button>
+        <button class="num-buttons" value="3">3</button>
+        <button class="opr-buttons" value="-">-</button>
 
         <button>.</button>
-        <button class="num-buttons">0</button>
+        <button class="num-buttons" value="0">0</button>
         <button class="opr-buttons">=</button>
-        <button class="opr-buttons">+</button>
+        <button class="opr-buttons" value="+">+</button>
 
       </div>
 
