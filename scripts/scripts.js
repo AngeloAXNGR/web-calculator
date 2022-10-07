@@ -12,6 +12,7 @@ clearButton.addEventListener('click', clear);
 function clear(){
   operations.textContent = '';
   result.textContent = '';
+  values = [];
 }
 
 
@@ -36,13 +37,18 @@ operatorButtons = document.querySelectorAll('.opr-buttons');
 operatorButtons.forEach(button =>{
   button.addEventListener('click', (e)=>{
     values.push(displayValue.textContent);
+    operations.textContent = '';
     operations.textContent += ' ' + displayValue.textContent + ' ' + e.target.value;
     displayValue.textContent = '';
     values.push(e.target.value);
     console.log(values);
 
-    if(e.target.value === '='){
-      operate();
+    if ((values[values.length-1] === '=' || 
+        values[values.length-1] === '+' ||
+        values[values.length-1] === '-' ||
+        values[values.length-1] === 'x' ||
+        values[values.length-1] === '/') && values.length === 4){
+          operate();
     }
   });
 });
@@ -57,15 +63,21 @@ function operate(){
   if(operator === '+'){
     let operation = add(num1, num2);
     displayValue.textContent = operation;
+    operations.textContent = '';
+    operations.textContent += ' ' + displayValue.textContent;
+    values = [];
   }else if(operator === '-'){
     let operation = subtract(num1, num2);
     displayValue.textContent = operation;
+    values = [];
   }else if(operator === 'x'){
     let operation = multiply(num1, num2);
     displayValue.textContent = operation;
+    values = [];
   }else if(operator === '/'){
     let operation = divide(num1, num2);
     displayValue.textContent = operation;
+    values = [];
   }
   console.log(values);
 }
