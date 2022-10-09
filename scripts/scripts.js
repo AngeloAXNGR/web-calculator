@@ -1,103 +1,134 @@
+const displayValue = document.querySelector('#final-result');
+const operationsDisplay = document.querySelector('#operations');
+// let operator = '';
+let numbers = '';
+let operations = [];
+
 const numberButtons = document.querySelectorAll('.num-buttons');
-const operations = document.querySelector('#operations');
-const displayValue = document.querySelector('#final-result')
-let result = displayValue;
-let values = [];
-
-
-// Clear and Delete Functionalities
-const clearButton = document.querySelector('#clear-button');
-clearButton.addEventListener('click', clear);
-
-function clear(){
-  operations.textContent = '';
-  result.textContent = '';
-  values = [];
-}
-
-
-const deleteButton = document.querySelector('#delete-button');
-deleteButton.addEventListener('click', deleteText);
-function deleteText(){
-  result.textContent = result.textContent.slice(0, -1);
-}
-
-
-
-// Get the TEXT value of num-buttons and display on screen
 numberButtons.forEach(button =>{
   button.addEventListener('click', (e) =>{
+      numbers+= e.target.value;
+      displayValue.textContent = numbers;
+  });
+});
 
-    displayValue.textContent += e.target.value;
-  })
-})
-
-// Get the TEXT value of opr-buttons and display on screen
-operatorButtons = document.querySelectorAll('.opr-buttons');
+const operatorButtons = document.querySelectorAll('.opr-buttons');
 operatorButtons.forEach(button =>{
-  button.addEventListener('click', (e)=>{
-    values.push(displayValue.textContent);
-    operations.textContent = '';
-    operations.textContent += ' ' + displayValue.textContent + ' ' + e.target.value;
-    displayValue.textContent = '';
-    values.push(e.target.value);
-    console.log(values);
+  button.addEventListener('click', (e) =>{
+    // Perform calculations immediately if the array and displayValue is not empty
+    if(operationsDisplay.textContent !== '' && displayValue.textContent !== ''){
+      let num1 = operations[0]
+      let operator = operations[1];
+      let num2 = Number(displayValue.textContent);
+      console.log('Num1: ' + num1);
+      console.log('Operator: ' + operator);
+      operate(operator, num1, num2);
+      operationsDisplay.textContent = `${Number(displayValue.textContent)} ${e.target.value}`;
+      numbers=''
+      displayValue.textContent = numbers;
+      operations = operationsDisplay.textContent.split(" ");
 
-    if ((values[values.length-1] === '=' || 
-        values[values.length-1] === '+' ||
-        values[values.length-1] === '-' ||
-        values[values.length-1] === 'x' ||
-        values[values.length-1] === '/') && values.length === 4){
-          operate();
+      // Convert first number from String to Num after converting operations into an array
+      operations[0] = Number(operations[0]);
+
+      // Console log for debugging purposes
+      // console.log('Im active');
+      // console.log(operations);
+      // console.log(num2);
+
+      // Otherwise populate array and displayValue with user input
+      // Perform calculations once condition above has been satisfied and after pressing '=' or any operator
+    }else{
+      let num1 = Number(displayValue.textContent);
+      let operator = e.target.value;
+      operations.push(num1);
+      operations.push(operator);
+      numbers = ''
+      operationsDisplay.textContent = `${num1} ${operator}`;
+      
+      // Console log for debugging purposes
+      // console.log(operations);
+      // console.log(displayValue.textContent);
+      // console.log('Im active2');
     }
   });
 });
 
-
-
-
-function operate(){
-  let num1 = Number(values[0]);
-  let num2 = Number(values[2]);
-  let operator = values[1];
-  if(operator === '+'){
-    let operation = add(num1, num2);
-    displayValue.textContent = operation;
-    operations.textContent = '';
-    operations.textContent += ' ' + displayValue.textContent;
-    values = [];
-  }else if(operator === '-'){
-    let operation = subtract(num1, num2);
-    displayValue.textContent = operation;
-    values = [];
-  }else if(operator === 'x'){
-    let operation = multiply(num1, num2);
-    displayValue.textContent = operation;
-    values = [];
-  }else if(operator === '/'){
-    let operation = divide(num1, num2);
-    displayValue.textContent = operation;
-    values = [];
+let equalsButton = document.querySelector('#operate-values');
+equalsButton.addEventListener('click', (e) =>{
+  if(operations.length !== 2){
+    console.log('nothing');
+    return;
+  }else{
+    let num1 = operations[0];
+    let num2 = displayValue.textContent;
+    let operator = operations[1];
+    operate(operator, num1, Number(num2));
+    operationsDisplay.textContent = `${num1} ${operator} ${num2} =`;
+    numbers = '';
   }
-  console.log(values);
+})
+
+const clearButton = document.querySelector('#clear-button');
+clearButton.addEventListener('click', clear);
+function clear(){
+  displayValue.textContent = '';
+  operationsDisplay.textContent = '';
+  operations = [];
+  numbers = '';
 }
 
-function add(a, b){
-  return a + b;
+function deleteValues(){
+  
 }
 
-function subtract(a,b){
-  return a - b;
-}
-
-function multiply(a,b){
-  return a * b;
-}
-
-function divide(a,b){
-  return a / b
+function resetDisplayValue(){
+  displayValue.textContent = '';
 }
 
 
+function operate(operator, num1, num2){
+  let result = '';
+  switch(operator){
+    
+    case '+':
+      result = add(num1, num2);
+      displayValue.textContent = result;
+      operations = [];
+      break;
+    case '-':
+      result = subtract(num1, num2);
+      displayValue.textContent = result;
+      operations = [];
+      break;
+    case 'x':
+      result = multiply(num1, num2);
+      displayValue.textContent = result;
+      operations = [];
+      break;
+    case '/':
+      result = divide(num1, num2);
+      displayValue.textContent = result;
+      operations = [];
+      break;
+  }
+  if(operator === '+'){
 
+  }
+}
 
+function add(num1, num2){
+  return num1 + num2;
+}
+
+function subtract(num1 ,num2){
+  return num1 - num2;
+}
+
+function multiply(num1 ,num2){
+  return num1 * num2;
+}
+
+function divide(num1 ,num2){
+  return num1 / num2;
+}
