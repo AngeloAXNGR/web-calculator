@@ -71,6 +71,7 @@ equalsButton.addEventListener('click', (e) =>{
 
 const clearButton = document.querySelector('#clear-button');
 clearButton.addEventListener('click', clear);
+
 function clear(){
   displayValue.textContent = '';
   operationsDisplay.textContent = '';
@@ -78,13 +79,13 @@ function clear(){
   numbers = '';
 }
 
-function deleteValues(){
-  
+const deleteButton = document.querySelector('#delete-button');
+deleteButton.addEventListener('click', deleteText);
+function deleteText(){
+  displayValue.textContent = displayValue.textContent.slice(0, -1);
+  numbers = numbers.slice(0, -1);
 }
 
-function resetDisplayValue(){
-  displayValue.textContent = '';
-}
 
 
 function operate(operator, num1, num2){
